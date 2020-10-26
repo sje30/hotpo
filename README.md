@@ -21,3 +21,13 @@ https://paperpile.com/app/p/b96eca8c-0ac1-0aa8-96f6-1c2ee37aca2d
 
 [hotpo.jl](hotpo.jl) 
 
+
+## [2020-10-26 Mon]
+
+Update, thanks to Yujia Liu.  If you are working on Windows with Rcpp,
+you will need to change "long int x" to "long long int x".  the size
+of integers depends on compilers.
+[reference](https://stackoverflow.com/questions/4244311/gcc-width-of-long-int-on-different-architectures).
+If you can, I'd advise windows users to use WSL2.
+
+
