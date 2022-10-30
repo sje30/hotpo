@@ -11,5 +11,7 @@ function hotpo(x::Int64)
     count
 end
 
-x = collect(1:1000000);
-@time res = map(hotpo, x);
+x = collect(1:100000);
+using BenchmarkTools
+@btime res = map(hotpo, x);
+
