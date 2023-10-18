@@ -1,0 +1,127 @@
+---
+title: Comparison of methods for HOTPO
+author: Stephen Eglen
+date: today
+format:
+  html:
+    toc: true
+    toc-location: left
+---
+
+# R implementation
+
+The naive implementation works, but is quite slow.
+
+
+
+```{r}
+hotpo  = function(x) {
+  count = 0
+  while (x > 1) {
+    count = count + 1
+    if  ( (x %% 2)==0) {
+      ## even number
+      x = x / 2
+    } else {
+      ## odd, so triple plus one
+      x = (3*x) + 1
+    }
+  }
+  count
+}
+
+hotpo(7)
+```
+
+## Example output
+
+```{r}
+x = 1:1e3
+res <- sapply(x, hotpo)
+plot(res, xlab='starting valu', ylab='iterations',pch=20)
+```
+
+## Timing of R version 1
+
+```{r}
+x = 1:1e2
+
+system.time(res <- sapply(x, hotpo))
+sum(res)
+```
+
+## R Version 2a -- one C loop
+
+The [RCpp](https://www.rcpp.org/) definitions are in the file
+[hotpo.cpp](hotpo.cpp).  There are two versions.  This first one uses
+a C implementation for calculating the interations for one initial
+value of n:
+
+```{r}
+Rcpp::sourceCpp('hotpo.cpp')
+
+system.time(res2 <- sapply(x, hotpo_c))
+sum(res2)
+```
+
+
+## R Version 2b -- two C loops
+
+The second value also has an outer loop to loop from one to a million:
+
+```{r}
+system.time(res3 <- hotpor_c(1, 1e6))
+sum(res3)
+```
+
+
+# Julia implementation
+
+# Julia Version 1
+
+The first version of the Julia implementation is quite
+straightforward.
+
+```{julia}
+function hotpo(x::Int64)
+    count = 0
+    while (x > 1)
+        count = count + 1
+        if (rem(x, 2)>0)
+            x = 3x + 1
+        else
+            x = x/2
+        end
+    end
+    count
+end
+
+x = collect(1:1_000_000);
+using BenchmarkTools
+time1 = @elapsed res1 = map(hotpo, x)
+sum(res1)
+```
+
+
+# Julia Version 2
+
+We use a couple of tricks to speed things up -- can you see them?
+
+```{julia}
+function hotpo2(x::Int64)
+    count = 0
+    while (x > 1)
+        count = count + 1
+        if x & 1 == 1
+            x = 3x + 1
+        else
+            x = x >> 1
+        end
+    end
+    count
+end
+time2 = @elapsed res2 = map(hotpo2, x)
+sum(res2)
+```
+
+
