@@ -7,6 +7,8 @@ Collatz conjecture.  http://oeis.org/A006577
 Scientific American article:
 https://paperpile.com/app/p/b96eca8c-0ac1-0aa8-96f6-1c2ee37aca2d
 
+See the [main document](https://sje30.github.io/hotpo/hotpo_compare.html)
+
 
 # Part 1 - implementation in R
 
@@ -21,6 +23,12 @@ https://paperpile.com/app/p/b96eca8c-0ac1-0aa8-96f6-1c2ee37aca2d
 
 [hotpo.jl](hotpo.jl) 
 
+# Instructions to run:
+
+```
+Rscript hotpo.R
+julia hotpo.jl
+```
 
 ## [2020-10-26 Mon]
 
