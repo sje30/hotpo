@@ -36,7 +36,7 @@ hotpo(7)
 ## Example output
 
 ```{r}
-x = 1:1e3
+x = 1:1e6
 res <- sapply(x, hotpo)
 plot(res, xlab='starting valu', ylab='iterations',pch=20)
 ```
