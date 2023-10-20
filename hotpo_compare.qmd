@@ -44,8 +44,6 @@ plot(res, xlab='starting valu', ylab='iterations',pch=20)
 ## Timing of R version 1
 
 ```{r}
-x = 1:1e2
-
 system.time(res <- sapply(x, hotpo))
 sum(res)
 ```
